@@ -1,17 +1,17 @@
 import { Page } from "@playwright/test";
 import { BasePage } from "./BasePage";
 import { LoginPage } from "./LoginPage";
-import { DashboardPage } from "./DashboardPage";
+import { ProductPage } from "./ProductPage";
 
 export class POManager {
   loginPage: LoginPage;
-  dashboardPage: DashboardPage;
   basePage: BasePage;
+  productPage: ProductPage;
 
   constructor(private page: Page) {
     this.loginPage = new LoginPage(this.page);
-    this.dashboardPage = new DashboardPage(this.page);
     this.basePage = new BasePage(this.page);
+    this.productPage = new ProductPage(this.page);
   }
 
   getBasePage(){
@@ -22,7 +22,7 @@ export class POManager {
     return this.loginPage;
   }
 
-  getDashboardPage() {
-    return this.dashboardPage;
+  getProductPage() {
+    return this.productPage;
   }
 }
