@@ -1,30 +1,28 @@
-const { DashboardPage } = require('./DashboardPage');
-const {LoginPage} = require('./LoginPage');
-import {BasePage} from './BasePage';
+import { Page } from "@playwright/test";
+import { BasePage } from "./BasePage";
+import { LoginPage } from "./LoginPage";
+import { DashboardPage } from "./DashboardPage";
 
-export class POManager
-{
-    page: any;
-    loginPage: any;
-    dashboardPage: any;
-    basePage: BasePage;
-    constructor(page)
-    {
-        this.page = page;
-        this.loginPage = new LoginPage(this.page);
-        this.dashboardPage = new DashboardPage(this.page);
-        this.basePage = new BasePage(this.page);
-    }
+export class POManager {
+  loginPage: LoginPage;
+  dashboardPage: DashboardPage;
+  basePage: BasePage;
 
-    getLoginPage()
-    {
-        return this.loginPage;
-    }
+  constructor(private page: Page) {
+    this.loginPage = new LoginPage(this.page);
+    this.dashboardPage = new DashboardPage(this.page);
+    this.basePage = new BasePage(this.page);
+  }
 
-    getDashboardPage()
-    {
-        return this.dashboardPage;
-    }
+  getBasePage(){
+    return this.basePage;
+  }
+
+  getLoginPage() {
+    return this.loginPage;
+  }
+
+  getDashboardPage() {
+    return this.dashboardPage;
+  }
 }
-
-module.exports = {POManager}

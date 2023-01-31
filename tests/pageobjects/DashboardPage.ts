@@ -1,4 +1,4 @@
-class DashboardPage{
+export class DashboardPage{
     page: any;
     products: any;
     productsText: any;
@@ -31,4 +31,3 @@ class DashboardPage{
         await this.page.locator("[routerlink*='cart']").click();
     }
 }
-module.exports = {DashboardPage}

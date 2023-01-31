@@ -1,4 +1,5 @@
 import { Locator, Page } from "@playwright/test";
+import {  baseUrl } from "../data/baseURL";
 
 export class BasePage {
   private homeButton: Locator;
@@ -11,6 +12,10 @@ export class BasePage {
     this.ordersButton = this.page.locator("[routerlink*='myorders']");
     this.cartButton = this.page.locator("[routerlink*='cart']");
     this.signOutButton = this.page.locator("li:nth-child(4) button:nth-child(1)");
+  }
+
+  async gotoBaseUrl(){
+    await this.page.goto(baseUrl);
   }
 
   async gotoHome() {
