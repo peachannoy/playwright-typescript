@@ -3,10 +3,16 @@ import { BasePage } from "./pageobjects/BasePage";
 import { LoginPage } from "./pageobjects/LoginPage";
 import {POManager} from "./pageobjects/POManager";
 import { LoginCredentials } from "./utils/dataImportInterfaces";
-const validLoginData : LoginCredentials = JSON.parse(JSON.stringify(require("./data/validLoginData")));
-const invalidLoginData : LoginCredentials = JSON.parse(JSON.stringify(require("./data/invalidLoginData")));
+import { LoginResults } from "./utils/loginResults"; 
 
-test('Valid Login', async ({page})=>
+//Get all testing data
+const validLoginData : LoginCredentials[] = JSON.parse(JSON.stringify(require("./data/LoginData_Valid")));
+const invalidLoginData : LoginCredentials[] = JSON.parse(JSON.stringify(require("./data/LoginData_Invalid")));
+const invalidEmailData : LoginCredentials[] = JSON.parse(JSON.stringify(require("./data/LoginData_MailInvalid")));
+
+
+for(const data of validLoginData){
+test(`Valid Login for ID ${data.id}`, async ({page})=>
 {
     const poManager: POManager = new POManager(page);
     const basePage: BasePage = poManager.getBasePage();
@@ -14,10 +20,13 @@ test('Valid Login', async ({page})=>
 
     await basePage.gotoBaseUrl();
 
-    console.log(await loginPage.login("mail@britta.de", "Password1*"));
+    const bool = await loginPage.login(data.email, data.password) == LoginResults.VALID;    
+    expect(bool).toBeTruthy();
 });
+}
 
-test('Incorrect email', async ({page})=>
+for(const data of invalidEmailData){
+test(`Invalid email for ID ${data.id}`, async ({page})=>
 {
     const poManager: POManager = new POManager(page);
     const basePage: BasePage = poManager.getBasePage();
@@ -25,10 +34,13 @@ test('Incorrect email', async ({page})=>
 
     await basePage.gotoBaseUrl();
 
-    console.log(await loginPage.login("ThisIsNotAMail", "Password1*"));
-});
+    const bool = await loginPage.login(data.email, data.password) == LoginResults.INVALIDEMAIL;    
+    expect(bool).toBeTruthy();
+});}
 
-test('Missing email', async ({page})=>
+//Valid login data is being used, but the email field is left empty
+for(const data of validLoginData){
+test(`Missing email for ID ${data.id}`, async ({page})=>
 {
     const poManager: POManager = new POManager(page);
     const basePage: BasePage = poManager.getBasePage();
@@ -36,10 +48,13 @@ test('Missing email', async ({page})=>
 
     await basePage.gotoBaseUrl();
 
-    console.log(await loginPage.login("", "Password1*"));
-});
+    const bool = await loginPage.login("", data.password) == LoginResults.MISSINGEMAIL;    
+    expect(bool).toBeTruthy();
+});}
 
-test('Missing password', async ({page})=>
+//Valid login data is being used, but the email field is left empty
+for(const data of validLoginData){
+test(`Missing Password for ID ${data.id}`, async ({page})=>
 {
     const poManager: POManager = new POManager(page);
     const basePage: BasePage = poManager.getBasePage();
@@ -47,10 +62,12 @@ test('Missing password', async ({page})=>
 
     await basePage.gotoBaseUrl();
 
-    console.log(await loginPage.login("mail@britta.de", ""));
-});
+    const bool = await loginPage.login(data.email,"") == LoginResults.MISSINGPASSWORD;    
+    expect(bool).toBeTruthy();
+});}
 
-test('Invalid Login', async ({page})=>
+for(const data of invalidLoginData){
+test(`Invalid Login for ID ${data.id}`, async ({page})=>
 {
     const poManager: POManager = new POManager(page);
     const basePage: BasePage = poManager.getBasePage();
@@ -58,5 +75,7 @@ test('Invalid Login', async ({page})=>
 
     await basePage.gotoBaseUrl();
 
-    console.log(await loginPage.login("mail@britta.de", "WrongPassword1*"));
+    const bool = await loginPage.login(data.email, data.password) == LoginResults.INVALID;    
+    expect(bool).toBeTruthy();
 });
+}

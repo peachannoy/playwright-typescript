@@ -2,7 +2,7 @@ import { Locator, Page } from "@playwright/test";
 import { LoginResults } from "../utils/loginResults"; 
 
 export class LoginPage{
-    userNameField: Locator;
+    emailField: Locator;
     passwordField: Locator;
     signInButton: Locator;
     missingEmail: Locator;
@@ -12,7 +12,7 @@ export class LoginPage{
 
     constructor(private page: Page)
      {
-        this.userNameField = page.locator("#userEmail");
+        this.emailField = page.locator("#userEmail");
         this.passwordField = page.locator("#userPassword");
         this.signInButton = page.locator("[value='Login']");
         this.missingEmail = page.getByText("*Email is required");
@@ -21,8 +21,8 @@ export class LoginPage{
         this.incorrectData = page.getByText("Incorrect email or password.");
      }
 
-     async login(username: string, password: string): Promise<LoginResults> {
-      await this.userNameField.type(username);
+     async login(email: string, password: string): Promise<LoginResults> {
+      await this.emailField.type(email);
       await this.passwordField.type(password);
       await this.signInButton.click();
       await this.page.waitForLoadState('networkidle');
