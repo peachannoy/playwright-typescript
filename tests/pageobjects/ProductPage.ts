@@ -20,21 +20,24 @@ export class ProductPage {
         (await this.products.nth(i).locator("b").textContent()) == productName
       ) {
         await this.products.nth(i).locator("button").nth(0).click();
+        await this.page.waitForTimeout(200)
+        await this.page.waitForLoadState('networkidle');
         return true;
       }
     }
     return false;
   }
 
-  async checkInfos(name: string, price: string): Promise<boolean> {
-    await this.page.waitForTimeout(200)
-    await this.page.waitForLoadState('networkidle');
-    
+  async checkInfos(name: string, price: string): Promise<boolean> {    
     const bool =
       (await this.productTitle.innerText()).toLowerCase() == name &&
       (await this.productPrice.innerText()) == price &&
       (await this.productDetails.innerText()) == name;
 
     return bool;
+  }
+
+  async addToCart(){
+    await this.page.locator('button:text("Add to Cart")').click();
   }
 }
