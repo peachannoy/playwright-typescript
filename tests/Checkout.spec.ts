@@ -26,7 +26,7 @@ const checkoutData: CheckoutData[] = JSON.parse(
 );
 
 for (let i = 0; i < checkoutData.length; i++) {
-  test.only(`Checkout for ID ${checkoutData[i].id}`, async ({ page }) => {
+  test(`Checkout for ID ${checkoutData[i].id}`, async ({ page }) => {
     const poManager: POManager = new POManager(page);
     const basePage: BasePage = poManager.getBasePage();
     const loginPage: LoginPage = poManager.getLoginPage();
@@ -39,7 +39,7 @@ for (let i = 0; i < checkoutData.length; i++) {
 
     await loginPage.login(validLoginData[i].email, validLoginData[i].password);
 
-    await productPage.searchProduct(productsValid[0].name);
+    expect(await productPage.searchProduct(productsValid[0].name)).toBeTruthy();
 
     await productPage.addToCart();
 

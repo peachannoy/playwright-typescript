@@ -66,7 +66,7 @@ const productsValid: Product[] = JSON.parse(
     expect(await basePage.checkLogInStatus()).toBeFalsy();
   });
 
-  test.only("Checkout from Productview", async ({ page }) => {
+  test("Checkout from Productview", async ({ page }) => {
     const poManager: POManager = new POManager(page);
     const basePage: BasePage = poManager.getBasePage();
     const loginPage: LoginPage = poManager.getLoginPage();
