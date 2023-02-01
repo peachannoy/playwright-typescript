@@ -2,45 +2,63 @@ import { test, expect } from "@playwright/test";
 import { BasePage } from "./pageobjects/BasePage";
 import { ProductPage } from "./pageobjects/ProductPage";
 import { POManager } from "./pageobjects/POManager";
-import { Product } from "./utils/dataImportInterfaces";
-import { LoginCredentials } from "./utils/dataImportInterfaces";
+import {
+  Product,
+  LoginCredentials,
+  CheckoutData,
+} from "./utils/dataImportInterfaces";
 import { LoginPage } from "./pageobjects/LoginPage";
 import { CartPage } from "./pageobjects/CartPage";
-
+import { CheckoutPage } from "./pageobjects/CheckoutPage";
+import { OrdersPage } from "./pageobjects/OrdersPage";
 
 //Get valid Login and Product infos
 const validLoginData: LoginCredentials[] = JSON.parse(
-    JSON.stringify(require("./data/LoginData_Valid"))
-  );
+  JSON.stringify(require("./data/LoginData_Valid"))
+);
 const productsValid: Product[] = JSON.parse(
-    JSON.stringify(require("./data/ProductData_Valid"))
-  );
+  JSON.stringify(require("./data/ProductData_Valid"))
+);
 
-  //Each product is tested on different accounts
-  for (let i = 0; i < productsValid.length; i++) {
-  test(`Valid checkout for ID ${productsValid[i].id}`, async ({ page }) => {
+//Get Checkout Data
+const checkoutData: CheckoutData[] = JSON.parse(
+  JSON.stringify(require("./data/CheckoutData_Valid"))
+);
+
+for (let i = 0; i < checkoutData.length; i++) {
+  test.only(`Checkout for ID ${checkoutData[i].id}`, async ({ page }) => {
     const poManager: POManager = new POManager(page);
     const basePage: BasePage = poManager.getBasePage();
     const loginPage: LoginPage = poManager.getLoginPage();
     const productPage: ProductPage = poManager.getProductPage();
     const cartPage: CartPage = poManager.getCartPage();
+    const checkoutPage: CheckoutPage = poManager.getCheckoutPage();
+    const ordersPage: OrdersPage = poManager.getOrdersPage();
 
     await basePage.gotoBaseUrl();
 
     await loginPage.login(validLoginData[i].email, validLoginData[i].password);
 
-    //Check wether the product has been found
-    const bool = await productPage.searchProduct(productsValid[i].name);
-    expect(bool).toBeTruthy();
+    await productPage.searchProduct(productsValid[0].name);
 
     await productPage.addToCart();
 
     await basePage.gotoCart();
 
-    const bool2 = await cartPage.findProduct(productsValid[i].name)
-    expect(bool2).toBeTruthy();
+    await cartPage.gotoCheckout();
 
-    await cartPage.removeProduct(productsValid[i].name);
+    const orderId = await checkoutPage.placeOrder(
+      checkoutData[i].creditCard,
+      checkoutData[i].exporationMonth,
+      checkoutData[i].expirationYear,
+      checkoutData[i].cvvCode,
+      checkoutData[i].nameOnCard,
+      checkoutData[i].country
+    );
 
+    await basePage.gotoOrders();
+
+    const bool = await ordersPage.findOrder(orderId);
+    expect(bool).toBeTruthy();
   });
 }

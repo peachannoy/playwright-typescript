@@ -31,7 +31,7 @@ export class BasePage {
     await this.page.waitForLoadState('networkidle');
   }
   async gotoOrders() {
-    await this.ordersButton.click();
+    await this.ordersButton.first().click();
     await this.page.waitForLoadState('networkidle');
   }
   async gotoCart() {
