@@ -28,12 +28,15 @@ export class BasePage {
 
   async gotoHome() {
     await this.homeButton.click();
+    await this.page.waitForLoadState('networkidle');
   }
   async gotoOrders() {
     await this.ordersButton.click();
+    await this.page.waitForLoadState('networkidle');
   }
   async gotoCart() {
     await this.cartButton.click();
+    await this.page.waitForLoadState('networkidle');
   }
   async signOut(){
     await this.signOutButton.click();
