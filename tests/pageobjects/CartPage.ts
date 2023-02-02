@@ -8,7 +8,7 @@ export class CartPage {
   }
 
   async findProduct(productname: string): Promise<boolean> {
-    await this.page.waitForTimeout(200);
+    await this.page.waitForTimeout(500);
 
     if (await this.page.getByText(productname).isVisible()) {
       return true;

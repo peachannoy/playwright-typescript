@@ -25,6 +25,7 @@ export class LoginPage{
       await this.emailField.type(email);
       await this.passwordField.type(password);
       await this.signInButton.click();
+      await this.page.waitForTimeout(500)
       await this.page.waitForLoadState('networkidle');
     
       if (await this.missingEmail.isVisible()) {

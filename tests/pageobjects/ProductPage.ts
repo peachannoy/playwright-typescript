@@ -14,6 +14,8 @@ export class ProductPage {
   }
 
   async searchProduct(productName: string): Promise<boolean> {
+    await this.page.waitForTimeout(1000)
+    await this.page.waitForLoadState('networkidle');
     const count = await this.products.count();
     for (let i = 0; i < count; i++) {
       if (
