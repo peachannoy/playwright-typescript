@@ -1,5 +1,4 @@
 import { Locator, Page } from "@playwright/test";
-import { baseUrl } from "../data/baseURL";
 
 export class BasePage {
   private homeButton: Locator;
@@ -17,7 +16,7 @@ export class BasePage {
   }
 
   async gotoBaseUrl() {
-    await this.page.goto(baseUrl);
+    await this.page.goto("/client");
   }
 
   async checkLogInStatus(): Promise<boolean> {
