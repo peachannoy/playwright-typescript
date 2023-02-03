@@ -49,11 +49,14 @@ export class CheckoutPage {
     await this.countryDropDown.waitFor();
     const optionsCount = await this.countryDropDown.locator("button").count();
     for (let i = 0; i < optionsCount; ++i) {
-      const text = await this.countryDropDown
+      const text = (await this.countryDropDown
         .locator("button")
         .nth(i)
-        .textContent() as string;
-      if (text.toLowerCase().replace(/\s/g, '') === country.toLowerCase().replace(/\s/g, '')) {
+        .textContent()) as string;
+      if (
+        text.toLowerCase().replace(/\s/g, "") ===
+        country.toLowerCase().replace(/\s/g, "")
+      ) {
         await this.countryDropDown.locator("button").nth(i).click();
         break;
       }

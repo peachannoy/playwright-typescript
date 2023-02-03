@@ -1,8 +1,11 @@
-import faker from 'faker';
+import faker from "faker";
 
-export function generatePassword(): string{
-    
-    let password = faker.internet.password(faker.datatype.number({min: 8, max: 20}), false, /[a-zA-Z0-9!@#$%*.?@]/) as string;
+export function generatePassword(): string {
+  let password = faker.internet.password(
+    faker.datatype.number({ min: 8, max: 20 }),
+    false,
+    /[a-zA-Z0-9!@#$%*.?@]/
+  ) as string;
 
   // Check if password meets requirements
   let hasLowercase = false;

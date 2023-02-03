@@ -1,31 +1,32 @@
-[{
+[
+  {
     "id": "0",
     "name": "zara coat 5",
     "price": "$ 31500"
-},
-{
+  },
+  {
     "id": "1",
     "name": "vans original",
     "price": "$ 31500"
-},
-{
+  },
+  {
     "id": "2",
     "name": "iphone 14 pro",
     "price": "$ 231500"
-},
-{
+  },
+  {
     "id": "3",
     "name": "iPhoNe 14 pRo",
     "price": "$ 231500"
-},
-{
+  },
+  {
     "id": "4",
     "name": " iphone 14 pro",
     "price": "$ 231500"
-},
-{
+  },
+  {
     "id": "5",
     "name": "iphone 13! pro",
     "price": "$ 231500"
-}
+  }
 ]

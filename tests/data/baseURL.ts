@@ -1,1 +1,1 @@
-export const baseUrl : string = 'https://rahulshettyacademy.com/client/';
+export const baseUrl: string = "https://rahulshettyacademy.com/client/";

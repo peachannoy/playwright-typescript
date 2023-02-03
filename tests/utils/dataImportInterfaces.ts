@@ -19,4 +19,3 @@ export interface CheckoutData {
   nameOnCard: string;
   country: string;
 }
-

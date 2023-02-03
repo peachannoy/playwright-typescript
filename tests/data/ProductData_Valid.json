@@ -1,16 +1,17 @@
-[{
+[
+  {
     "id": "0",
     "name": "zara coat 3",
     "price": "$ 31500"
-},
-{
+  },
+  {
     "id": "1",
     "name": "adidas original",
     "price": "$ 31500"
-},
-{
+  },
+  {
     "id": "2",
     "name": "iphone 13 pro",
     "price": "$ 231500"
-}
+  }
 ]

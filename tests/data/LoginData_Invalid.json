@@ -1,16 +1,17 @@
-[{
+[
+  {
     "id": "0",
     "email": "mail@britta.de",
     "password": "WrongPassword"
-},
-{
+  },
+  {
     "id": "1",
     "email": "valid@mail.de",
     "password": "Bronze27#"
-},
-{
+  },
+  {
     "id": "2",
     "email": "another@mail.com",
     "password": "Ape89!"
-}
+  }
 ]
