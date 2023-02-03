@@ -11,6 +11,7 @@ import { LoginPage } from "./pageobjects/LoginPage";
 import { CartPage } from "./pageobjects/CartPage";
 import { CheckoutPage } from "./pageobjects/CheckoutPage";
 import { OrdersPage } from "./pageobjects/OrdersPage";
+import { sanitizeFileName } from "./utils/sanitizeFileName";
 
 //Get valid Login and Product infos
 const validLoginData: LoginCredentials[] = JSON.parse(
@@ -55,6 +56,9 @@ for (let i = 0; i < checkoutData.length; i++) {
       checkoutData[i].nameOnCard,
       checkoutData[i].country
     );
+
+    await page.screenshot({path: `./screenshots/Checkout/ScreenshotOrderFor${sanitizeFileName(checkoutData[i].nameOnCard)}.png`})
+
 
     await basePage.gotoOrders();
 

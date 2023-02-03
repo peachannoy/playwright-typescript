@@ -6,6 +6,7 @@ import { Product } from "./utils/dataImportInterfaces";
 import { LoginCredentials } from "./utils/dataImportInterfaces";
 import { LoginPage } from "./pageobjects/LoginPage";
 import { CartPage } from "./pageobjects/CartPage";
+import { sanitizeFileName } from "./utils/sanitizeFileName";
 
 //Get valid Login and Product infos
 const validLoginData: LoginCredentials[] = JSON.parse(
@@ -40,6 +41,8 @@ for (let i = 0; i < productsValid.length; i++) {
 
     const bool2 = await cartPage.findProduct(productsValid[i].name);
     expect(bool2).toBeTruthy();
+
+    await page.screenshot({path: `./screenshots/Cart/ScreenshotCartFor${sanitizeFileName(productsValid[i].name)}.png`})
 
     await cartPage.removeProduct(productsValid[i].name);
   });

@@ -5,6 +5,7 @@ import { POManager } from "./pageobjects/POManager";
 import { Product } from "./utils/dataImportInterfaces";
 import { LoginCredentials } from "./utils/dataImportInterfaces";
 import { LoginPage } from "./pageobjects/LoginPage";
+import { sanitizeFileName } from "./utils/sanitizeFileName";
 
 //Get valid Login and Product infos
 const validLoginData: LoginCredentials[] = JSON.parse(
@@ -34,6 +35,8 @@ for (const data of productsValid) {
     //Check wether the product has been found
     const bool = await productPage.searchProduct(data.name);
     expect(bool).toBeTruthy();
+
+    await page.screenshot({path: `./screenshots/Product/ScreenshotProductFor${sanitizeFileName(data.name)}.png`})
 
     //Check wether all information are correct and visible
     const bool2 = await productPage.checkInfos(data.name, data.price);

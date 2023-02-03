@@ -4,6 +4,7 @@ import { LoginPage } from "./pageobjects/LoginPage";
 import { POManager } from "./pageobjects/POManager";
 import { LoginCredentials } from "./utils/dataImportInterfaces";
 import { LoginResults } from "./utils/loginResults";
+import { sanitizeFileName } from "./utils/sanitizeFileName";
 
 //Get all testing data
 const validLoginData: LoginCredentials[] = JSON.parse(
@@ -27,6 +28,9 @@ for (const data of validLoginData) {
     const bool =
       (await loginPage.login(data.email, data.password)) == LoginResults.VALID;
     expect(bool).toBeTruthy();
+
+    await page.screenshot({path: `./screenshots/Login/ScreenshotLoginFor${sanitizeFileName(data.email)}.png`})
+
   });
 }
 
