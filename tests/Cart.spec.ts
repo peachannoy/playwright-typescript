@@ -7,18 +7,19 @@ import { LoginCredentials } from "./utils/dataImportInterfaces";
 import { LoginPage } from "./pageobjects/LoginPage";
 import { CartPage } from "./pageobjects/CartPage";
 
-
 //Get valid Login and Product infos
 const validLoginData: LoginCredentials[] = JSON.parse(
-    JSON.stringify(require("./data/LoginData_Valid"))
-  );
+  JSON.stringify(require("./data/LoginData_Valid"))
+);
 const productsValid: Product[] = JSON.parse(
-    JSON.stringify(require("./data/ProductData_Valid"))
-  );
+  JSON.stringify(require("./data/ProductData_Valid"))
+);
 
-  //Each product is tested on different accounts
-  for (let i = 0; i < productsValid.length; i++) {
-  test(`Add to Cart and delete right after for ID ${productsValid[i].id}`, async ({ page }) => {
+//Each product is tested on different accounts
+for (let i = 0; i < productsValid.length; i++) {
+  test(`Add to Cart and delete right after for ID ${productsValid[i].id}`, async ({
+    page,
+  }) => {
     const poManager: POManager = new POManager(page);
     const basePage: BasePage = poManager.getBasePage();
     const loginPage: LoginPage = poManager.getLoginPage();
@@ -37,10 +38,9 @@ const productsValid: Product[] = JSON.parse(
 
     await basePage.gotoCart();
 
-    const bool2 = await cartPage.findProduct(productsValid[i].name)
+    const bool2 = await cartPage.findProduct(productsValid[i].name);
     expect(bool2).toBeTruthy();
 
     await cartPage.removeProduct(productsValid[i].name);
-
   });
 }

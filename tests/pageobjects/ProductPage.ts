@@ -14,21 +14,23 @@ export class ProductPage {
   }
 
   async searchProduct(productName: string): Promise<boolean> {
+    await this.page.waitForTimeout(1000);
+    await this.page.waitForLoadState("networkidle");
     const count = await this.products.count();
     for (let i = 0; i < count; i++) {
       if (
         (await this.products.nth(i).locator("b").textContent()) == productName
       ) {
         await this.products.nth(i).locator("button").nth(0).click();
-        await this.page.waitForTimeout(200)
-        await this.page.waitForLoadState('networkidle');
+        await this.page.waitForTimeout(200);
+        await this.page.waitForLoadState("networkidle");
         return true;
       }
     }
     return false;
   }
 
-  async checkInfos(name: string, price: string): Promise<boolean> {    
+  async checkInfos(name: string, price: string): Promise<boolean> {
     const bool =
       (await this.productTitle.innerText()).toLowerCase() == name &&
       (await this.productPrice.innerText()) == price &&
@@ -37,7 +39,7 @@ export class ProductPage {
     return bool;
   }
 
-  async addToCart(){
+  async addToCart() {
     await this.page.locator('button:text("Add to Cart")').click();
   }
 }
