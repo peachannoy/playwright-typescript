@@ -9,6 +9,7 @@ export class LoginPage{
     missingPassword: Locator;
     invalidEmail: Locator;
     incorrectData: Locator;
+    registerButton: Locator;
 
     constructor(private page: Page)
      {
@@ -19,6 +20,7 @@ export class LoginPage{
         this.missingPassword = page.getByText("*Password is required");
         this.invalidEmail = page.getByText("*Enter Valid Email");
         this.incorrectData = page.getByText("Incorrect email or password.");
+        this.registerButton = page.locator("//a[normalize-space()='Register']");
      }
 
      async login(email: string, password: string): Promise<LoginResults> {
@@ -45,5 +47,9 @@ export class LoginPage{
       }
     
       return LoginResults.VALID;
+    }
+
+    async gotoRegister(){
+      await this.registerButton.click();
     }
 }
